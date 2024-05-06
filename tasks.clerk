@@ -1,37 +1,47 @@
-: Testing
+:: Testing
 x Pass in file locations to make testing eaiser
 . Add more unit tests
 
-: Memory / allocation
-. Do we need to alloc? Can we make it all static? Why?
+:: Memory / allocation
+x Do we need to alloc? Can we make it all static? Why?
 x Switch to GPA?
 
-: Learning
-. Having to 'double' store the lines isn't great - what's a better way?
+:: Learning
+x Having to 'double' store the lines isn't great - what's a better way?
 
-: Refactoring
-> Move parsing code into Task struct - and test it!
-. Move file opening/reading code somewhere else
+:: Refactoring
+/ Move parsing code into Task struct - and test it!
+x Move file opening/reading code somewhere else
 
-: Functionality - read/filter
+:: Functionality - read/filter
+> Swap from std.debug.print to a buffered writer
+x Re-implement parsing file in home dir (user tasks)
 x Basic filtering - show doing, monitoring and unknown
 x Display groups in output
 . Parse CLI args for filtering { clerk --doing --monitoring }
 . Parse notes
-/ Detect project tasks if present
+x Detect project tasks if present
 x Parse titles / groups
 . Parse owners
 . Parse dates
 . Parse tags in titles (not sure we need this anymore)
 
-: Functionality - gui
+:: Functionality - gui
 . Get terminal access and switch to 'uncooked' mode
 . Basic GUI
 . Keyboard input
 
-: Functionality - write/edit
+:: Functionality - sort and tidy
+. Add option to sort .clerk files
+. Add option to tidy files (remove done?)
+
+:: Functionality - dates and times
+. Is there a good time library for zig?
+. Add due dates, created dates and completed dates... do we really need this?
+
+:: Functionality - write/edit
 . Write updated tasks back to disk
 . Task level editing
 
-: Improvements / Maybe list
+:: Improvements / Maybe list
 . Indent titles by switching to a -- symbol or similar?
