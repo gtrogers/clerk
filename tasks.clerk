@@ -14,7 +14,7 @@ x Having to 'double' store the lines isn't great - what's a better way?
 x Move file opening/reading code somewhere else
 
 :: Functionality - read/filter
-> Swap from std.debug.print to a buffered writer
+x Swap from std.debug.print to a buffered writer
 x Re-implement parsing file in home dir (user tasks)
 x Basic filtering - show doing, monitoring and unknown
 x Display groups in output
