@@ -18,13 +18,14 @@ x Move file opening/reading code somewhere else
 x Re-implement parsing file in home dir (user tasks)
 x Basic filtering - show doing, monitoring and unknown
 x Display groups in output
-. Parse CLI args for filtering { clerk --doing --monitoring }
+> Parse CLI args for filtering { clerk --doing --monitoring }
 . Parse notes
 x Detect project tasks if present
 x Parse titles / groups
 . Parse owners
 . Parse dates
 . Parse tags in titles (not sure we need this anymore)
+. Nicer output - bold, etc
 
 :: Functionality - gui
 . Get terminal access and switch to 'uncooked' mode
