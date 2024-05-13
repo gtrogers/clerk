@@ -1,5 +1,14 @@
 const std = @import("std");
 
+pub const Kind = enum {
+    active,
+    upcoming,
+    done,
+    shelved,
+    cancelled,
+    any,
+};
+
 pub const Status = enum(u8) {
     unknown_or_quick = 0,
     doing = '>',
@@ -20,10 +29,14 @@ pub const Status = enum(u8) {
             else => Status.unknown_or_quick,
         };
     }
-    pub fn isActive(self: Status) bool {
-        return switch (self) {
-            .unknown_or_quick, .monitoring, .doing => true,
-            else => false,
+    pub fn matches(self: Status, kind: Kind) bool {
+        return switch (kind) {
+            Kind.active => self == .unknown_or_quick or self == .monitoring or self == .doing,
+            Kind.upcoming => self == .unknown_or_quick or self == .todo,
+            Kind.done => self == .done,
+            Kind.shelved => self == .shelved,
+            Kind.cancelled => self == .cancelled,
+            Kind.any => true,
         };
     }
     pub fn toGlyph(self: Status) ?u8 {

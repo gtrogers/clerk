@@ -2,6 +2,7 @@ const std = @import("std");
 
 const tasks = @import("./tasks.zig");
 const cli = @import("./cli.zig");
+const line_art = @import("./line-art.zig");
 
 const TaskFile = struct {
     allocator: std.mem.Allocator,
@@ -24,7 +25,7 @@ const TaskFile = struct {
         while (split.next()) |line| {
             if (line.len < 2) continue;
             if (line[0] == ':') {
-                try groups.append(line[2..]);
+                try groups.append(line[3..]);
                 current_group += 1;
             } else {
                 const status = tasks.Status.of(line);
@@ -45,17 +46,27 @@ const TaskFile = struct {
     }
 };
 
-pub fn printActiveTasks(task_file: TaskFile, writer: anytype) !void {
+fn inSlice(comptime T: type, s: []T, val: T) bool {
+    for (s) |item| {
+        if (item == val) {
+            return true;
+        }
+    }
+    return false;
+}
+
+pub fn printTasks(task_file: TaskFile, k: tasks.Kind, writer: anytype) !void {
     var group_no: usize = 0;
+    var written = false;
     for (task_file.list.items(.status), task_file.list.items(.content), task_file.list.items(.group_index)) |s, c, gi| {
-        // TODO - use buffered writer here
-        if (s.isActive()) {
+        if (s.matches(k)) {
+            if (!written) written = true;
             if (gi > group_no) {
-                try writer.print("\n{s}\n", .{task_file.groups.items[gi]});
+                try writer.print("\t{s}\n", .{task_file.groups.items[gi]});
                 group_no = gi;
             }
 
-            try writer.print("\t", .{});
+            try writer.print("\t  ", .{});
             const status_glyph = s.toGlyph();
             if (status_glyph) |sg| {
                 try writer.print("{c} ", .{sg});
@@ -65,7 +76,8 @@ pub fn printActiveTasks(task_file: TaskFile, writer: anytype) !void {
         }
     }
 
-    std.debug.print("\n", .{});
+    if (!written) try writer.print("\tNo active tasks!", .{});
+    try writer.print("\n", .{});
 }
 
 pub fn main() !void {
@@ -79,13 +91,18 @@ pub fn main() !void {
     const mode = try cli.readArgsAlloc(allocator);
 
     switch (mode) {
-        cli.Mode.show_active => {
+        cli.Mode.show_active, cli.Mode.show_upcoming => {
+            const kind = switch (mode) {
+                cli.Mode.show_active => tasks.Kind.active,
+                cli.Mode.show_upcoming => tasks.Kind.upcoming,
+                else => unreachable,
+            };
             if (try TaskFile.init(allocator, "./tasks.clerk")) |*project_tasks| {
                 var todos = project_tasks.*;
                 defer todos.deinit();
 
-                try writer.print("PROJECT TASKS\n", .{});
-                try printActiveTasks(project_tasks.*, &writer);
+                try writer.print("\tPROJECT TASKS\n", .{});
+                try printTasks(todos, kind, &writer);
             }
 
             const home_dir = try std.process.getEnvVarOwned(allocator, "HOME");
@@ -98,14 +115,15 @@ pub fn main() !void {
                 var todos = user_tasks.*;
                 defer todos.deinit();
 
-                try writer.print("\nPERSONAL TASKS\n", .{});
-                try printActiveTasks(user_tasks.*, &writer);
+                try writer.print("\n\tPERSONAL TASKS\n", .{});
+                try printTasks(todos, kind, &writer);
             }
         },
         cli.Mode.tidy => std.debug.print("Not yet implemented!", .{}),
         cli.Mode.help => std.debug.print("Some useful help text", .{}),
     }
 
+    try writer.print("\n", .{});
     try buf.flush();
 }
 

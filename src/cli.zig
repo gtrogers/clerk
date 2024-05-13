@@ -2,6 +2,7 @@ const std = @import("std");
 
 pub const Mode = enum {
     show_active,
+    show_upcoming,
     tidy,
     help,
     pub fn parse(args: [][]u8) Mode {
@@ -9,6 +10,8 @@ pub const Mode = enum {
         const arg_of_note = args[1];
 
         if (std.mem.eql(u8, "tidy", arg_of_note)) return .tidy;
+        if (std.mem.eql(u8, "now", arg_of_note)) return .show_active;
+        if (std.mem.eql(u8, "next", arg_of_note)) return .show_upcoming;
         return .help;
     }
 };
