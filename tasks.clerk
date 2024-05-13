@@ -5,6 +5,7 @@ x Pass in file locations to make testing eaiser
 :: Memory / allocation
 x Do we need to alloc? Can we make it all static? Why?
 x Switch to GPA?
+. It would be cool to make the whole thing statically alocated as an exercise in tiger style
 
 :: Learning
 x Having to 'double' store the lines isn't great - what's a better way?
@@ -18,14 +19,20 @@ x Swap from std.debug.print to a buffered writer
 x Re-implement parsing file in home dir (user tasks)
 x Basic filtering - show doing, monitoring and unknown
 x Display groups in output
-> Parse CLI args for filtering { clerk --doing --monitoring }
-. Parse notes
+x Parse CLI args for filtering - now, next, etc
 x Detect project tasks if present
 x Parse titles / groups
 . Parse owners
 . Parse dates
-. Parse tags in titles (not sure we need this anymore)
+~ Parse tags in titles (not sure we need this anymore)
 . Nicer output - bold, etc
+> Search/filter by group
+~ Add 'blocked' task definition { we have shelved or monitoring for this }
+. Add remaining 'basic' modes: done, shelved, cancelled
+. Add help text
+
+:: Functionality - add note to task using {}
+. Parse notes
 
 :: Functionality - gui
 . Get terminal access and switch to 'uncooked' mode
@@ -44,5 +51,13 @@ x Parse titles / groups
 . Write updated tasks back to disk
 . Task level editing
 
+:: Functionality - versioning
+. Add 'meta' line and version number format
+. Decide what to do if the version line is missing
+
+:: Project - website
+. Build a nice, simple website for Clerk
+
 :: Improvements / Maybe list
-. Indent titles by switching to a -- symbol or similar?
+x Indent titles by switching to a -- symbol or similar?
+. Better support for line drawing characters and unicode symbols

@@ -8,10 +8,11 @@ focused on what you are doing (and not what's coming next).
 - Put tasks that belong to you in `$HOME/tasks.clerk`
 - Put tasks that belong to projects you're working on in `<project dir>/tasks.clerk`
 - Format your `tasks.clerk` files according to the syntax below
-- Running `./clerk` will display
-  - All the **active** tasks in your home directory (your user tasks)
-  - AND all the **active** tasks in the current directory (your project tasks)
-- Active tasks are tasks that have a status of: doing, monitoring or 'unknown_or_quick'
+- Running `clerk` or `clerk now` will display
+  - All the **active** tasks in your home directory (your user tasks) AND all the **active** tasks in the current directory (your project tasks)
+  - Active tasks are tasks that have a status of: doing, monitoring or 'unknown_or_quick'
+- Running `clerk next` will display
+  - All the **upcoming** tasks in your home directory (your user tasks) AND all the **upcoming** tasks in the current directory (your project tasks)
 
 ## Clerk file format
 
