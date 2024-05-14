@@ -83,6 +83,7 @@ pub fn printTasks(task_file: TaskFile, k: tasks.Kind, writer: anytype) !void {
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
+    defer std.debug.assert(gpa.deinit() == .ok);
 
     const std_out = std.io.getStdOut();
     var buf = std.io.bufferedWriter(std_out.writer());
