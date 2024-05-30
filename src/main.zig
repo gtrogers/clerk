@@ -99,6 +99,7 @@ pub fn main() !void {
 
             const home_dir = try std.process.getEnvVarOwned(allocator, "HOME");
             defer allocator.free(home_dir);
+
             const parts: [2][]const u8 = .{ home_dir, "tasks.clerk" };
             const user_tasks_path = try std.fs.path.join(allocator, &parts);
             defer allocator.free(user_tasks_path);
