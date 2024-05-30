@@ -46,15 +46,6 @@ const TaskFile = struct {
     }
 };
 
-fn inSlice(comptime T: type, s: []T, val: T) bool {
-    for (s) |item| {
-        if (item == val) {
-            return true;
-        }
-    }
-    return false;
-}
-
 pub fn printTasks(task_file: TaskFile, k: tasks.Kind, writer: anytype) !void {
     var group_no: usize = 0;
     var written = false;
