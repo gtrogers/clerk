@@ -2,7 +2,6 @@ const std = @import("std");
 
 const tasks = @import("./tasks.zig");
 const cli = @import("./cli.zig");
-const line_art = @import("./line-art.zig");
 
 const TaskFile = struct {
     allocator: std.mem.Allocator,
